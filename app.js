@@ -9,6 +9,14 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
 const app = express();
+const mongoose = require('mongoose');
+const DB_USER = process.env.DB_USER;
+const DB_PASS = process.env.DB_PASS;
+const mongoDB = `mongodb+srv://${DB_USER}:${DB_PASS}@cluster0.gnatm.mongodb.net/inventory`;
+
+mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error: '));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
