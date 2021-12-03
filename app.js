@@ -12,7 +12,7 @@ const app = express();
 const mongoose = require('mongoose');
 const DB_USER = process.env.DB_USER;
 const DB_PASS = process.env.DB_PASS;
-const mongoDB = `mongodb+srv://${DB_USER}:${DB_PASS}@cluster0.gnatm.mongodb.net/inventory`;
+const mongoDB = `mongodb+srv://${DB_USER}:${DB_PASS}@cluster0.gnatm.mongodb.net/inventory?retryWrites=true&w=majority`;
 
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
