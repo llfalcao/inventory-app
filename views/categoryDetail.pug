@@ -7,7 +7,8 @@ block content
   ul
     each product in products
       li
-        p Name: #{product.name}
-        p Description: #{product.description}
-        p Price: $ #{product.price}
-        p Stock: #{product.number_in_stock}
+        a(href=product.url)
+          p Name: #{product.name}
+          p Description: #{product.description}
+          p Price: $ #{product.price}
+          p Stock: #{product.number_in_stock}

@@ -1,4 +1,6 @@
+const { body, validationResult } = require('express-validator');
 const mongoose = require('mongoose');
+
 const Category = require('../models/category');
 const Product = require('../models/product');
 
@@ -23,22 +25,56 @@ exports.categoryDetail = (req, res) => {
       .sort({ name: 1 })
       .then((data) => (products = data)),
   ])
-    .then(() => {
-      console.log(category, products);
-      res.render('categoryDetail', { category, products });
-    })
+    .then(() => res.render('categoryDetail', { category, products }))
     .catch((err) => next(err));
 };
 
 // Display Category create form on GET
-exports.categoryCreateGET = (req, res) => {
-  res.send('NOT IMPLEMENTED: Category create GET');
+exports.categoryCreateGET = (req, res, next) => {
+  res.render('categoryForm', { title: 'Create Category' });
 };
 
 // Handle Category  create on POST
-exports.categoryCreatePOST = (req, res) => {
-  res.send('NOT IMPLEMENTED: Category create POST');
-};
+exports.categoryCreatePOST = [
+  // Validade and sanitize fields
+  body('name', 'Category name required').trim().isLength({ min: 1 }).escape(),
+  body('description', 'Category description required')
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  // Process request
+  (req, res, next) => {
+    // Extract errors
+    const errors = validationResult(req);
+    // Create category object with escaped and trimmed data
+    const { name, description } = req.body;
+    const category = new Category({ name, description });
+    // Render form again if any errors are found
+    if (!errors.isEmpty()) {
+      res.render('categoryForm', {
+        title: 'Create Category',
+        category,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      // Data from form is valid
+      Category.findOne({ name })
+        .then((foundCategory) => {
+          if (foundCategory) {
+            // Redirect to category page if it already exists
+            res.redirect(foundCategory.url);
+          } else {
+            category.save((err) => {
+              if (err) return next(err);
+              res.redirect(category.url);
+            });
+          }
+        })
+        .catch((err) => next(err));
+    }
+  },
+];
 
 // Display Category delete form on GET
 exports.categoryDeleteGET = (req, res) => {
