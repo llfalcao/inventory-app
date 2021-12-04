@@ -1,14 +1,12 @@
 const Category = require('../models/category');
-const Product = require('../models/product');
 
 // Display list of all categories
 exports.categoryList = (req, res) => {
-  // res.send('NOT IMPLEMENTED: Category list');
   Category.find({})
     .then((data) =>
       res.render('index', { title: 'Categories', categories: data }),
     )
-    .catch((err) => console.error(err));
+    .catch((err) => next(err));
 };
 
 // Display detail page for a specific category

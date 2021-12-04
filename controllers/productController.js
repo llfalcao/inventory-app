@@ -2,7 +2,13 @@ const Product = require('../models/product');
 
 // Display list of all Products
 exports.productList = (req, res) => {
-  res.send('NOT IMPLEMENTED: Product list');
+  Product.find({})
+    .populate('category')
+    .sort({ name: 1 })
+    .then((data) =>
+      res.render('productList', { title: 'Products', products: data }),
+    )
+    .catch((err) => next(err));
 };
 
 // Display detail page for a specific Product
