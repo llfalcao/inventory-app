@@ -6,7 +6,6 @@ const CategorySchema = new Schema({
   description: { type: String, required: true, maxLength: 100 },
 });
 
-// TODO: Virtual URL
 CategorySchema.virtual('url').get(() => `/inventory/category/${this._id}`);
 
 module.exports = mongoose.model('Category', CategorySchema);
