@@ -29,7 +29,7 @@ router.post('/category/:id/edit', categoryController.categoryUpdatePOST);
 router.get('/category/:id', categoryController.categoryDetail);
 
 // GET request for list of all Categories
-rouget.get('/', categoryController.categoryList);
+router.get('/', categoryController.categoryList);
 
 // Product Routes
 
@@ -48,11 +48,13 @@ router.post('/product/:id/delete', productController.productDeletePOST);
 // GET request to update Product
 router.get('/product/:id/edit', productController.productUpdateGET);
 
-// POST request to update Product
+// POST request to upd ate Product
 router.post('/product/:id/edit', productController.productUpdatePOST);
 
 // GET request for one Product
 router.get('/product/:id', productController.productDetail);
 
 // GET request for list of all Products
-rouget.get('/products', productController.productList);
+router.get('/products', productController.productList);
+
+module.exports = router;
