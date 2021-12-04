@@ -9,6 +9,8 @@ const ProductSchema = new Schema({
   number_in_stock: { type: Number, required: true },
 });
 
-ProductSchema.virtual('url').get(() => `/inventory/product/${this._id}`);
+ProductSchema.virtual('url').get(function () {
+  return `/inventory/product/${this._id}`;
+});
 
 module.exports = mongoose.model('Product', ProductSchema);
