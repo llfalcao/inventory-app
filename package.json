@@ -17,6 +17,7 @@
     "pug": "^3.0.2"
   },
   "devDependencies": {
+    "async": "^3.2.2",
     "nodemon": "^2.0.15"
   }
 }
