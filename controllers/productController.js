@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Product = require('../models/product');
 
 // Display list of all Products
@@ -13,7 +14,10 @@ exports.productList = (req, res) => {
 
 // Display detail page for a specific Product
 exports.productDetail = (req, res) => {
-  res.send(`NOT IMPLEMENTED: Product detail: ${req.params.id}`);
+  const id = mongoose.Types.ObjectId(req.params.id);
+  Product.findById(id)
+    .then((data) => res.render('productDetail', { product: data }))
+    .catch((err) => next(err));
 };
 
 // Display Product create form on GET
