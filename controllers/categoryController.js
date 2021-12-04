@@ -1,4 +1,6 @@
+const mongoose = require('mongoose');
 const Category = require('../models/category');
+const Product = require('../models/product');
 
 // Display list of all categories
 exports.categoryList = (req, res) => {
@@ -11,7 +13,21 @@ exports.categoryList = (req, res) => {
 
 // Display detail page for a specific category
 exports.categoryDetail = (req, res) => {
-  res.send(`NOT IMPLEMENTED: Category Detail: ${req.params.id}`);
+  const id = mongoose.Types.ObjectId(req.params.id);
+  let products;
+  let category;
+
+  Promise.all([
+    Category.findById(id).then((data) => (category = data)),
+    Product.find({ category: id })
+      .sort({ name: 1 })
+      .then((data) => (products = data)),
+  ])
+    .then(() => {
+      console.log(category, products);
+      res.render('categoryDetail', { category, products });
+    })
+    .catch((err) => next(err));
 };
 
 // Display Category create form on GET

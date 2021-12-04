@@ -14,5 +14,5 @@ block content
     ul
       each category in categories
         li
-          p !{category.name}
+          a(href=category.url) !{category.name}
           p !{category.description}
