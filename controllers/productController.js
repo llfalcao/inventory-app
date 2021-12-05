@@ -102,13 +102,20 @@ exports.productCreatePOST = [
 ];
 
 // Display Product delete form on GET
-exports.productDeleteGET = (req, res) => {
-  res.send('NOT IMPLEMENTED: Product delete GET');
+exports.productDeleteGET = (req, res, next) => {
+  Product.findById(req.params.id, (err, product) => {
+    if (err) return next(err);
+    if (product === null) res.redirect('/inventory/products');
+    else res.render('productDelete', { title: 'Delete product', product });
+  });
 };
 
 // Handle Product delete on POST
-exports.productDeletePOST = (req, res) => {
-  res.send('NOT IMPLEMENTED: Product delete POST');
+exports.productDeletePOST = (req, res, next) => {
+  Product.findByIdAndRemove(req.body.productid, (err) => {
+    if (err) return next(err);
+    res.redirect('/inventory/products');
+  });
 };
 
 // Display Product update form on GET

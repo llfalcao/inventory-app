@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1 #{title}: #{product.name}
+  p Description: #{product.description}
+
+  p Do you really want to delete this product?
+
+  form(method='POST' action='')
+    div.form-group
+      input#productid.form-control(type='hidden',name='productid', required='true', value=product._id )
+
+    button.btn.btn-primary(type='submit') Delete
