@@ -80,13 +80,24 @@ exports.categoryCreatePOST = [
 ];
 
 // Display Category delete form on GET
-exports.categoryDeleteGET = (req, res) => {
-  res.send('NOT IMPLEMENTED: Category delete GET');
+exports.categoryDeleteGET = (req, res, next) => {
+  Category.findById(req.params.id)
+    .then((category) => {
+      if (category === null) {
+        res.redirect('/inventory');
+      } else {
+        res.render('categoryDelete', { title: 'Delete category', category });
+      }
+    })
+    .catch((err) => next(err));
 };
 
 // Handle Category delete on POST
 exports.categoryDeletePOST = (req, res) => {
-  res.send('NOT IMPLEMENTED: Category delete POST');
+  Category.findByIdAndRemove(req.body.categoryid, (err) => {
+    if (err) return next(err);
+    res.redirect('/inventory');
+  });
 };
 
 // Display Category update on GET

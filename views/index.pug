@@ -4,13 +4,9 @@ block content
   h1= title
   p Welcome to #{title}
 
-  h2 Dynamic content
-
   if error
     p Error getting dynamic content.
   else
-    p Products by category:
-
     ul
       each category in categories
         li
