@@ -45,7 +45,7 @@ exports.categoryCreatePOST = [
   (req, res, next) => {
     // Extract errors
     const errors = validationResult(req);
-    // Create category object with escaped and trimmed data
+    // Create category object with escaped data
     const { name, description } = req.body;
     const category = new Category({ name, description });
     // Render form again if any errors are found
