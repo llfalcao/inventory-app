@@ -1,5 +1,8 @@
+const { body, validationResult } = require('express-validator');
 const mongoose = require('mongoose');
+
 const Product = require('../models/product');
+const Category = require('../models/category');
 
 // Display list of all Products
 exports.productList = (req, res) => {
@@ -21,8 +24,13 @@ exports.productDetail = (req, res) => {
 };
 
 // Display Product create form on GET
-exports.productCreateGET = (req, res) => {
-  res.send('NOT IMPLEMENTED: Product create GET');
+exports.productCreateGET = (req, res, next) => {
+  Category.find({})
+    .sort({ name: 1 })
+    .then((data) =>
+      res.render('productForm', { title: 'Add New Product', categories: data }),
+    )
+    .catch((err) => next(err));
 };
 
 // Handle Product create form on POST
