@@ -37,15 +37,19 @@ exports.categoryCreateGET = (req, res, next) => {
 // Handle Category  create on POST
 exports.categoryCreatePOST = [
   // Validade and sanitize fields
-  body('name', 'Category name required').isLength({ min: 1 }).escape(),
+  body('name', 'Category name required')
+    .trim()
+    .isLength({ min: 1, max: 100 })
+    .escape(),
   body('description', 'Category description required')
-    .isLength({ min: 1 })
+    .trim()
+    .isLength({ min: 1, max: 100 })
     .escape(),
   // Process request
   (req, res, next) => {
     // Extract errors
     const errors = validationResult(req);
-    // Create category object with escaped data
+    // Create Category object with escaped data
     const { name, description } = req.body;
     const category = new Category({ name, description });
     // Render form again if any errors are found
@@ -57,11 +61,11 @@ exports.categoryCreatePOST = [
       });
       return;
     } else {
-      // Data from form is valid
+      // Data from form is valid;
+      // Redirect to the category page if it already exists
       Category.findOne({ name })
         .then((foundCategory) => {
           if (foundCategory) {
-            // Redirect to category page if it already exists
             res.redirect(foundCategory.url);
           } else {
             category.save((err) => {
