@@ -81,15 +81,11 @@ exports.categoryCreatePOST = [
 
 // Display Category delete form on GET
 exports.categoryDeleteGET = (req, res, next) => {
-  Category.findById(req.params.id)
-    .then((category) => {
-      if (category === null) {
-        res.redirect('/inventory');
-      } else {
-        res.render('categoryDelete', { title: 'Delete category', category });
-      }
-    })
-    .catch((err) => next(err));
+  Category.findById(req.params.id, (err, category) => {
+    if (err) return next(err);
+    if (category === null) res.redirect('/inventory');
+    else res.render('categoryDelete', { title: 'Delete category', category });
+  });
 };
 
 // Handle Category delete on POST
@@ -101,11 +97,40 @@ exports.categoryDeletePOST = (req, res) => {
 };
 
 // Display Category update on GET
-exports.categoryUpdateGET = (req, res) => {
-  res.send('NOT IMPLEMENTED: Category update GET');
+exports.categoryUpdateGET = (req, res, next) => {
+  Category.findById(req.params.id, (err, category) => {
+    if (err) return next(err);
+    if (category === null) res.redirect('/inventory');
+    else res.render('categoryForm', { title: 'Update category', category });
+  });
 };
 
 // Handle Category update on POST
-exports.categoryUpdatePOST = (req, res) => {
-  res.send('NOT IMPLEMENTED: Category update POST');
-};
+exports.categoryUpdatePOST = [
+  body('name', 'Category name required')
+    .trim()
+    .isLength({ min: 1, max: 100 })
+    .escape(),
+  body('description', 'Category description required')
+    .trim()
+    .isLength({ min: 1, max: 100 })
+    .escape(),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    const { name, description } = req.body;
+    const { id } = req.params;
+    const category = new Category({ _id: id, name, description });
+    if (!errors.isEmpty()) {
+      res.render('categoryForm', {
+        title: 'Update category',
+        category,
+        errors: errors.array(),
+      });
+    } else {
+      Category.findByIdAndUpdate(id, category, {}, (err, updatedCategory) => {
+        if (err) return next(err);
+        res.redirect(updatedCategory.url);
+      });
+    }
+  },
+];
