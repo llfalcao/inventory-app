@@ -8,7 +8,7 @@ block content
       li
         a(href=product.url) #{product.name}
         p Description: #{product.description}
-        p Category: #{product.category[0].name}
+        p Category: #{product.category.name}
         p Price: $ #{product.price}
         p Stock: #{product.number_in_stock}
 

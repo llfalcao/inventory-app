@@ -37,7 +37,7 @@ router.get('/', categoryController.categoryList);
 router.get('/product/new', productController.productCreateGET);
 
 // POST request for creating a Product
-router.post('/product/new', productController.productCreateGET);
+router.post('/product/new', productController.productCreatePOST);
 
 // GET request to delete Product
 router.get('/product/:id/delete', productController.productDeleteGET);
