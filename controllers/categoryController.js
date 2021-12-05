@@ -31,7 +31,7 @@ exports.categoryDetail = (req, res) => {
 
 // Display Category create form on GET
 exports.categoryCreateGET = (req, res, next) => {
-  res.render('categoryForm', { title: 'Create Category' });
+  res.render('categoryForm', { title: 'New Category' });
 };
 
 // Handle Category  create on POST
@@ -55,7 +55,7 @@ exports.categoryCreatePOST = [
     // Render form again if any errors are found
     if (!errors.isEmpty()) {
       res.render('categoryForm', {
-        title: 'Create Category',
+        title: 'New Category',
         category,
         errors: errors.array(),
       });

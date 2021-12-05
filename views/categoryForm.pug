@@ -5,10 +5,10 @@ block content
 
   form(method='POST' action='')
     div.form-group
-      label(for='name') Name:
+      label(for='name') #[strong Name:]
       input#name.form-control(type='text', placeholder='Electronics, Tools etc.' name='name' value=(undefined===category ? '' : category.name))
     div.form-group
-      label(for='description') Description:
+      label(for='description') #[strong Description:]
       input#description.form-control(type='text', name='description' value=(undefined===category ? '' : category.description))
     button.btn.btn-primary(type='submit') Submit
 

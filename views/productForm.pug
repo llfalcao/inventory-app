@@ -5,21 +5,21 @@ block content
 
   form(method='POST' action='')
     div.form-group
-      label(for='name') Name:
+      label(for='name') #[strong Name:]
       input#name.form-control(type='text', name='name' value=(undefined===product ? '' : product.name))
     div.form-group
-      label(for='description') Description:
+      label(for='description') #[strong Description:]
       input#description.form-control(type='text', name='description' value=(undefined===product ? '' : product.description))    
     div.form-group
-      label(for='category') Category:
+      label(for='category') #[strong Category:]
       select#category.custom-select(name="category")
         each category in categories
           option(value=category.name) #{category.name}
     div.form-group
-      label(for='price') Price:
+      label(for='price') #[strong Price:]
       input#price.form-control(type='text', name='price' value=(undefined===product ? '' : product.price))
     div.form-group
-      label(for='number-in-stock') Number in stock:
+      label(for='number-in-stock') #[strong Number in stock:]
       input#number-in-stock.form-control(type='text', name='number_in_stock' value=(undefined===product ? '' : product.number_in_stock))
     button.btn.btn-primary(type='submit') Submit
 

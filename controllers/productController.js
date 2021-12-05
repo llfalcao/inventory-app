@@ -35,7 +35,7 @@ exports.productDetail = (req, res) => {
 exports.productCreateGET = (req, res, next) => {
   getCategories()
     .then((categories) =>
-      res.render('productForm', { title: 'Add New Product', categories }),
+      res.render('productForm', { title: 'New Product', categories }),
     )
     .catch((err) => next(err));
 };
@@ -75,7 +75,7 @@ exports.productCreatePOST = [
     if (!errors.isEmpty()) {
       getCategories().then((categories) =>
         res.render('productForm', {
-          title: 'Add New Product',
+          title: 'New Product',
           product,
           categories,
           errors: errors.array(),
