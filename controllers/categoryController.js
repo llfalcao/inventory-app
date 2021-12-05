@@ -37,9 +37,8 @@ exports.categoryCreateGET = (req, res, next) => {
 // Handle Category  create on POST
 exports.categoryCreatePOST = [
   // Validade and sanitize fields
-  body('name', 'Category name required').trim().isLength({ min: 1 }).escape(),
+  body('name', 'Category name required').isLength({ min: 1 }).escape(),
   body('description', 'Category description required')
-    .trim()
     .isLength({ min: 1 })
     .escape(),
   // Process request
