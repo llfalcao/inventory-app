@@ -12,9 +12,14 @@ block content
       input#description.form-control(type='text', name='description' value=(undefined===product ? '' : product.description))    
     div.form-group
       label(for='category') #[strong Category:]
-      select#category.custom-select(name="category")
+      select#category.custom-select(name='category')
         each category in categories
-          option(value=category.name) #{category.name}
+          option(
+            value=category.name
+            selected=(
+              product && category._id.toString() === product.category._id.toString()
+            )
+          ) #{category.name}
     div.form-group
       label(for='price') #[strong Price:]
       input#price.form-control(type='text', name='price' value=(undefined===product ? '' : product.price))

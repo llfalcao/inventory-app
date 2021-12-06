@@ -32,12 +32,13 @@ exports.productDetail = (req, res) => {
 };
 
 // Display Product create form on GET
-exports.productCreateGET = (req, res, next) => {
-  getCategories()
-    .then((categories) =>
-      res.render('productForm', { title: 'New Product', categories }),
-    )
-    .catch((err) => next(err));
+exports.productCreateGET = async (req, res, next) => {
+  try {
+    const categories = await getCategories();
+    res.render('productForm', { title: 'New Product', categories });
+  } catch (err) {
+    next(err);
+  }
 };
 
 // Handle Product create form on POST
@@ -62,12 +63,12 @@ exports.productCreatePOST = [
     // Extract errors
     const errors = validationResult(req);
     // Create Product object
-    const { name, description, category, price, number_in_stock } = req.body;
-    const foundCategory = await Category.findOne({ name: category });
+    const { name, description, price, number_in_stock } = req.body;
+    const category = await Category.findOne({ name: req.body.category });
     const product = new Product({
       name,
       description,
-      category: foundCategory,
+      category,
       price,
       number_in_stock,
     });
@@ -119,11 +120,65 @@ exports.productDeletePOST = (req, res, next) => {
 };
 
 // Display Product update form on GET
-exports.productUpdateGET = (req, res) => {
-  res.send('NOT IMPLEMENTED: Product update GET');
+exports.productUpdateGET = (req, res, next) => {
+  // Get list of categories and the product that's being updated
+  Promise.all([
+    getCategories().then((categories) => categories),
+    Product.findById(req.params.id)
+      .populate('category')
+      .then((product) => product),
+  ])
+    .then(([categories, product]) =>
+      res.render('productForm', {
+        title: 'Update product',
+        product,
+        categories,
+      }),
+    )
+    .catch((err) => next(err));
 };
 
 // Handle Product update on POST
-exports.productUpdatePOST = (req, res) => {
-  res.send('NOT IMPLEMENTED: Product update POST');
-};
+exports.productUpdatePOST = [
+  body('name', 'Product name required')
+    .trim()
+    .isLength({ min: 1, max: 100 })
+    .escape(),
+  body('description', 'Product description required')
+    .trim()
+    .isLength({ min: 1, max: 250 })
+    .escape(),
+  body('category', 'Product category required')
+    .trim()
+    .isLength({ min: 1, max: 100 })
+    .escape(),
+  body('price', 'Price must be a number').trim().isNumeric(),
+  body('number_in_stock', 'Stock must be a number').trim().isNumeric(),
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    const { name, description, price, number_in_stock } = req.body;
+    const { id: _id } = req.params;
+    const category = await Category.findOne({ name: req.body.category });
+    const product = new Product({
+      _id,
+      name,
+      description,
+      category,
+      price,
+      number_in_stock,
+    });
+
+    if (!errors.isEmpty()) {
+      res.render('productForm', {
+        title: 'Update product',
+        product,
+        errors: errors.array(),
+      });
+    } else {
+      Product.findByIdAndUpdate(_id, product, {}, (err, updatedProduct) => {
+        if (err) return next(err);
+        res.redirect(updatedProduct.url);
+      });
+    }
+  },
+];
