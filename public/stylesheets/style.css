@@ -1,8 +1,5 @@
 body {
-  background: #101112;
-  color: #fff;
-  padding: 50px;
-  font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
+  font: 14px 'Inter', 'Lucida Grande', Helvetica, Arial, sans-serif;
 }
 
 a {
@@ -10,7 +7,17 @@ a {
 }
 
 .sidebar-nav {
-  margin-top: 20px;
-  padding: 0;
-  list-style: none;
+  background: #f6f6f6;
+}
+
+.nav-link {
+  background: #e7e7e7;
+}
+
+.nav-link:hover {
+  background: #e2e2e2;
+}
+
+.nav-link:active {
+  background: #d0d0d0;
 }
