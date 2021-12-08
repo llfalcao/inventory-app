@@ -4,20 +4,23 @@ block content
   h1(class='mb-0') #{category.name}
   p(class='mb-4 category-description') #{category.description}
   
-  table(class='table table-bordered table-striped')
-    thead
-      tr
-        th(scope='col') Product Name
-        th(scope='col') Stock
-        th(scope='col') Price
-    tbody
-      each product in products
+  if products.length > 0
+    table(class='table table-bordered table-striped')
+      thead
         tr
-          td(class='p-2')
-            a(href=product.url class='text-dark text-decoration-none')
-              p(class='mb-0') #{product.name}
-              p(class='mb-0 product-description') Description: #{product.description}
-          td(class='p-2')
-            p #{product.number_in_stock}
-          td(class='p-2')
-            p $#{product.price}
+          th(scope='col') Product Name
+          th(scope='col') Stock
+          th(scope='col') Price
+      tbody
+        each product in products
+          tr
+            td(class='p-2')
+              a(href=product.url class='text-dark text-decoration-none')
+                p(class='mb-0') #{product.name}
+                p(class='mb-0 product-description') Description: #{product.description}
+            td(class='p-2')
+              p #{product.number_in_stock}
+            td(class='p-2')
+              p $#{product.price}
+  else
+    p There are no products in this category.    
