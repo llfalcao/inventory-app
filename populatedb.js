@@ -1,4 +1,5 @@
 const async = require('async');
+const gis = require('g-i-s');
 
 // Get arguments passed on command line
 const userArgs = process.argv.slice(2);
@@ -17,7 +18,20 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 const categories = [];
 const products = [];
 
-function productCreate(
+async function getProductImage(name) {
+  return await new Promise((resolve, reject) => {
+    gis({ searchTerm: name, queryStringAddition: '&tbs=isz:m' }, (err, res) => {
+      if (err) {
+        console.error(err);
+        resolve('/images/product-image-default.jpg');
+      } else {
+        resolve(res[0].url);
+      }
+    });
+  });
+}
+
+async function productCreate(
   name,
   description,
   category,
@@ -25,23 +39,29 @@ function productCreate(
   number_in_stock,
   cb,
 ) {
-  const product = new Product({
-    name,
-    description,
-    category,
-    price,
-    number_in_stock,
-  });
+  try {
+    const image = await getProductImage(name);
+    const product = new Product({
+      name,
+      description,
+      category,
+      price,
+      number_in_stock,
+      image,
+    });
 
-  product.save((err) => {
-    if (err) {
-      cb(err, null);
-      return;
-    }
-    console.log(`New Product: ${product}`);
-    products.push(product);
-    cb(null, product);
-  });
+    product.save((err) => {
+      if (err) {
+        cb(err, null);
+        return;
+      }
+      console.log(`New Product: ${product}`);
+      products.push(product);
+      cb(null, product);
+    });
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 function categoryCreate(name, description, cb) {
