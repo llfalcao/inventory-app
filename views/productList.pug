@@ -1,16 +1,30 @@
 extends layout
 
 block content
-  h1= title
+  h1(class='mb-4')= title
 
-  ul
-    each product in products
-      li
-        a(href=product.url) #{product.name}
-        p Description: #{product.description}
-        p Category: #{product.category.name}
-        p Price: $ #{product.price}
-        p Stock: #{product.number_in_stock}
+  table(class='table table-bordered table-striped')
+    thead
+      tr
+        th(scope='col') Product Name
+        th(scope='col') Category
+        th(scope='col') Stock
+        th(scope='col') Price
+    tbody
+      each product in products
+        tr
+          td(class='p-2')
+            a(href=product.url class='text-dark text-decoration-none')
+              p(class='mb-0') #{product.name}
+              p(class='mb-0 product-description') Description: #{product.description}
+          td(class='p-2')
+            a(href=product.category.url class='text-dark text-decoration-none')
+              p #{product.category.name}
+          td(class='p-2')
+            p #{product.number_in_stock}
+          td(class='p-2')
+            p $#{product.price}
 
-    else
-      li There are no products.
+      else
+        tr
+          th There are no products.

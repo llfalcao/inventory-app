@@ -32,6 +32,7 @@ a {
   font-size: 32px;
 }
 
+/* Category list (homepage) */
 .category-container {
   gap: 20px;
 }
@@ -49,7 +50,13 @@ a {
   font-weight: 500;
 }
 
+/* Product list */
+.product-description,
 .category-description {
   font-size: 13px;
   opacity: 0.7;
+}
+
+.product-name {
+  color: #2c363f;
 }

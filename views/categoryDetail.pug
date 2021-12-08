@@ -1,14 +1,23 @@
 extends layout
 
 block content
-  h1 #{category.name}
-  p #{category.description}
+  h1(class='mb-0') #{category.name}
+  p(class='mb-4 category-description') #{category.description}
   
-  ul
-    each product in products
-      li
-        a(href=product.url)
-          p Name: #{product.name}
-          p Description: #{product.description}
-          p Price: $ #{product.price}
-          p Stock: #{product.number_in_stock}
+  table(class='table table-bordered table-striped')
+    thead
+      tr
+        th(scope='col') Product Name
+        th(scope='col') Stock
+        th(scope='col') Price
+    tbody
+      each product in products
+        tr
+          td(class='p-2')
+            a(href=product.url class='text-dark text-decoration-none')
+              p(class='mb-0') #{product.name}
+              p(class='mb-0 product-description') Description: #{product.description}
+          td(class='p-2')
+            p #{product.number_in_stock}
+          td(class='p-2')
+            p $#{product.price}
