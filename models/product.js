@@ -7,6 +7,7 @@ const ProductSchema = new Schema({
   category: { type: Schema.Types.ObjectId, ref: 'Category' },
   price: { type: Number, required: true },
   number_in_stock: { type: Number, required: true },
+  image: { type: String, required: true },
 });
 
 ProductSchema.virtual('url').get(function () {

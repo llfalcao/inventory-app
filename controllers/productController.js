@@ -1,5 +1,5 @@
 const { body, validationResult } = require('express-validator');
-const mongoose = require('mongoose');
+const gis = require('g-i-s');
 
 const Product = require('../models/product');
 const Category = require('../models/category');
@@ -23,13 +23,15 @@ exports.productList = (req, res, next) => {
 };
 
 // Display detail page for a specific Product
-exports.productDetail = (req, res, next) => {
-  Product.findById(req.params.id)
-    .populate('category')
-    .exec((err, product) => {
-      if (err) return next(err);
-      res.render('productDetail', { product });
-    });
+exports.productDetail = async (req, res, next) => {
+  try {
+    const product = await Product.findById(req.params.id)
+      .populate('category', 'name')
+      .exec();
+    res.render('productDetail', { product });
+  } catch (err) {
+    return next(err);
+  }
 };
 
 // Display Product create form on GET
@@ -41,6 +43,19 @@ exports.productCreateGET = async (req, res, next) => {
     return next(err);
   }
 };
+
+async function getProductImage(name) {
+  return await new Promise((resolve, reject) => {
+    gis({ searchTerm: name, queryStringAddition: '&tbs=isz:m' }, (err, res) => {
+      if (err) {
+        console.log(err);
+        resolve('/images/product-image-default.jpg');
+      } else {
+        resolve(res[0].url);
+      }
+    });
+  });
+}
 
 // Handle Product create form on POST
 exports.productCreatePOST = [
@@ -70,6 +85,7 @@ exports.productCreatePOST = [
       category,
       price: req.body.price,
       number_in_stock: req.body.number_in_stock,
+      image: await getProductImage(req.body.name),
     });
     // Render form again if there are errors
     if (!errors.isEmpty()) {

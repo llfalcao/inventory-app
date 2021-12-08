@@ -60,3 +60,12 @@ a {
 .product-name {
   color: #2c363f;
 }
+
+.product-title {
+  font-weight: 600;
+}
+
+/* Product Detail Page */
+.product-detail-info {
+  font-size: 16px;
+}

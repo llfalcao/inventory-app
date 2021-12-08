@@ -1,10 +1,12 @@
 extends layout
 
 block content
-  h1= title
-
-  h2 #{product.name}
-  p Description: #{product.description}
-  p Category: #{product.category.name}
-  p Price: $ #{product.price}
-  p Stock: #{product.number_in_stock}
+  div(class="row")
+    div(class="col-sm-4")
+      img(src=product.image alt=product.name class="img-thumbnail w-100")
+    div(class="col")
+      h1(class='product-title')= product.name
+      h4(class='mb-3') $#{product.price}
+      p(class="mb-1 product-detail-info") #[strong Description]: #{product.description}
+      p(class="mb-1 product-detail-info") #[strong Category]: #{product.category.name}
+      p(class="mb-1 product-detail-info") #[strong Stock]: #{product.number_in_stock}
