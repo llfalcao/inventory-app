@@ -6,6 +6,16 @@ a {
   color: #00b7ff;
 }
 
+/* Header */
+.header {
+  background: #2c363f;
+  height: 60px;
+}
+
+.nav-title {
+  font-size: 18px;
+}
+
 /* Sidebar */
 .sidebar-wrapper {
   background: #f6f6f6;
