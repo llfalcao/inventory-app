@@ -1,8 +1,15 @@
 extends layout
 
 block content
-  h1(class='mb-0') #{category.name}
-  p(class='mb-4 category-description') #{category.description}
+  div(class='row d-flex align-items-baseline')
+    div(class='col')
+      h1(class='mb-0') #{category.name}
+      p(class='mb-4 category-description') #{category.description}
+    div
+      a(href=`/inventory/category/${category._id}/edit`)
+        button(type='button' class='btn btn-secondary ml-3 mr-1 mb-4') Edit
+      a(href=`/inventory/category/${category._id}/delete`)
+        button(type='button' class='btn btn-danger mr-3 mb-4') Delete
   
   if products.length > 0
     table(class='table table-bordered table-striped')
@@ -23,4 +30,4 @@ block content
             td(class='p-2')
               p $#{product.price}
   else
-    p There are no products in this category.    
+    p There are no products in this category.

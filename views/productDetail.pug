@@ -1,11 +1,20 @@
 extends layout
 
 block content
+  div(class='row d-flex align-items-baseline')
+    div(class='col')
+      h1(class='mb-0') #{product.name}
+      p(class='mb-4 product-description') #{product.description}
+    div
+      a(href=`/inventory/product/${product._id}/edit`)
+        button(type='button' class='btn btn-secondary ml-3 mr-1 mb-4') Edit
+      a(href=`/inventory/product/${product._id}/delete`)
+        button(type='button' class='btn btn-danger mr-3 mb-4') Delete
+
   div(class='row')
-    div(class='col-sm-4')
+    div(class='col-sm-6')
       img(src=product.image alt=product.name class='img-thumbnail w-100')
     div(class='col')
-      h1(class='product-title')= product.name
       h4(class='mb-3') $#{product.price}
       p(class='mb-1 product-detail-info') #[strong Description]: #{product.description}
       p(class='mb-1 product-detail-info') #[strong Category]: #{product.category.name}
