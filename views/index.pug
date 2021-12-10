@@ -8,7 +8,7 @@ block content
   else
     ul(class='list-unstyled d-flex flex-wrap category-container')
       each category in categories
-        li(class='rounded border border-2 w-25 d-flex flex-column justify-content-center category-item')
+        li(class='col-sm-3 p-0 rounded border border-2 d-flex flex-column justify-content-center category-item')
           a(href=category.url class='p-3 text-dark text-decoration-none')
             p(class='m-0 category-name') #{category.name}
             p(class='m-0 category-description') #{category.description}
