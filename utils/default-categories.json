@@ -1,0 +1,78 @@
+[
+  {
+    "name": "Action",
+    "description": "Physical challenges with hand-eye coordination and motor skill"
+  },
+  {
+    "name": "Adventure",
+    "description": "Puzzles and interaction with the environment"
+  },
+  {
+    "name": "Arcade",
+    "description": "Games of skill"
+  },
+  {
+    "name": "Casual",
+    "description": "Easy to pick up and put down again"
+  },
+  {
+    "name": "Family",
+    "description": "Games for everyone"
+  },
+  {
+    "name": "First-Person Shooter",
+    "description": "Weapon-based combat in a first-person perspective"
+  },
+  {
+    "name": "Free To Play",
+    "description": "No payment required"
+  },
+  {
+    "name": "Indie",
+    "description": "Independent games"
+  },
+  {
+    "name": "Massively Multiplayer Online",
+    "description": "Real-time interaction between hundreds of players"
+  },
+  {
+    "name": "Multiplayer Online Battle Arena",
+    "description": "Work together as a team to achieve a victory"
+  },
+  {
+    "name": "None",
+    "description": "Uncategorized products"
+  },
+  {
+    "name": "Platform",
+    "description": "Platformer or jump'n'run games"
+  },
+  {
+    "name": "Puzzle",
+    "description": "Puzzle solving games"
+  },
+  {
+    "name": "Racing",
+    "description": "Competition against time or opponents using some means of transportation"
+  },
+  {
+    "name": "Role Playing",
+    "description": "Character growth in strength and experience over the course of the game"
+  },
+  {
+    "name": "Simulation",
+    "description": "Simulated aspects of a real or fictional reality"
+  },
+  {
+    "name": "Sports",
+    "description": "Video games that simulate sports"
+  },
+  {
+    "name": "Strategy",
+    "description": "Turn-based or real-time strategy games"
+  },
+  {
+    "name": "Tech Demo",
+    "description": "Games with limited content meant to be previews of the final product"
+  }
+]
