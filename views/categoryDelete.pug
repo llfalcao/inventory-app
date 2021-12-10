@@ -6,8 +6,31 @@ block content
 
   p Do you really want to delete this category?
 
-  form(method='POST' action='')
-    div.form-group
-      input#categoryid.form-control(type='hidden',name='categoryid', required='true', value=category._id )
-
-    button.btn.btn-primary(type='submit') Delete
+  form(method='POST' action='' class='m-3 col-xs-2')
+    div(class='form-group row')
+      input(
+        id='secret'
+        type='password'
+        class='form-control col mr-2'
+        name='secret'
+        placeholder='Type the secret password here'
+      )
+      input(
+        id='categoryid'
+        class='form-control'
+        type='hidden'
+        name='categoryid'
+        required='true'
+        value=category._id
+      )
+      input(
+        id='categoryname'
+        class='form-control'
+        type='hidden'
+        name='categoryname'
+        required='true'
+        value=category.name
+      )
+      button(class='btn btn-danger' type='submit') Delete
+  if error
+    p(class='m-0 text-danger')= error

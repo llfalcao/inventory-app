@@ -4,15 +4,36 @@ block content
   h1(class='mb-4')= title
 
   form(method='POST' action='')
-    div.form-group
+    div(class='form-group')
       label(for='name') #[strong Name:]
-      input#name.form-control(type='text', placeholder='Electronics, Tools etc.' name='name' value=(undefined===category ? '' : category.name))
-    div.form-group
+      input(
+        id='name'
+        class='form-control'
+        type='text'
+        placeholder='Electronics, Tools etc.'
+        name='name'
+        value=(undefined===category ? '' : category.name)
+      )
+    div(class='form-group')
       label(for='description') #[strong Description:]
-      input#description.form-control(type='text', name='description' value=(undefined===category ? '' : category.description))
+      input(
+        id='description'
+        class='form-control'
+        type='text'
+        name='description'
+        value=(undefined===category ? '' : category.description)
+      )
+    div(class='form-group')
+      input(
+        id='secret'
+        type='password'
+        class='form-control col mr-2'
+        name='secret'
+        placeholder='Type the secret password to allow editing'
+      )
     button.btn.btn-primary(type='submit') Submit
 
   if errors
-   ul
+   ul(class='p-2')
     for error in errors
-     li!= error.msg
+     li(class='text-danger')!= error.msg

@@ -130,6 +130,21 @@ exports.productDeleteGET = (req, res, next) => {
 
 // Handle Product delete on POST
 exports.productDeletePOST = (req, res, next) => {
+  if (req.body.secret !== process.env.DB_DEL) {
+    const error = 'Incorrect password';
+    Product.findById(req.params.id, (err, product) => {
+      if (err) return next(err);
+      if (product === null) res.redirect('/inventory/products');
+      else
+        res.render('productDelete', {
+          title: 'Delete product',
+          product,
+          error,
+        });
+    });
+    return;
+  }
+
   Product.findByIdAndRemove(req.body.productid, (err) => {
     if (err) return next(err);
     res.redirect('/inventory/products');
@@ -173,6 +188,15 @@ exports.productUpdatePOST = [
   body('number_in_stock', 'Stock must be a number').trim().isNumeric(),
   async (req, res, next) => {
     const errors = validationResult(req);
+    if (req.body.secret !== process.env.DB_SECRET) {
+      errors.errors.push({
+        value: '',
+        msg: 'Incorrect password',
+        param: 'secret',
+        location: 'body',
+      });
+    }
+
     const { name, description, price, number_in_stock } = req.body;
     const { id: _id } = req.params;
     const category = await Category.findOne({ name: req.body.category });
@@ -186,9 +210,11 @@ exports.productUpdatePOST = [
     });
 
     if (!errors.isEmpty()) {
+      const categories = await getCategories();
       res.render('productForm', {
         title: 'Update product',
         product,
+        categories,
         errors: errors.array(),
       });
     } else {

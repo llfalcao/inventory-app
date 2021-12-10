@@ -97,7 +97,20 @@ exports.categoryDeleteGET = (req, res, next) => {
 
 // Handle Category delete on POST
 exports.categoryDeletePOST = async (req, res, next) => {
-  // Use a default category so that it won't become 'null'
+  if (req.body.secret !== process.env.DB_SECRET) {
+    const error = 'Incorrect password';
+    Category.findById(req.params.id, (err, category) => {
+      if (err) return next(err);
+      if (category === null) res.redirect('/inventory');
+      else
+        res.render('categoryDelete', {
+          title: 'Delete category',
+          category,
+          error,
+        });
+    });
+    return;
+  }
   const id = mongoose.Types.ObjectId(req.params.id);
   const categoryReplacement = await Category.findOne({ name: 'None' }).exec();
   await Product.updateMany(
@@ -133,6 +146,14 @@ exports.categoryUpdatePOST = [
     .escape(),
   (req, res, next) => {
     const errors = validationResult(req);
+    if (req.body.secret !== process.env.DB_SECRET) {
+      errors.errors.push({
+        value: '',
+        msg: 'Incorrect password',
+        param: 'secret',
+        location: 'body',
+      });
+    }
     const { name, description } = req.body;
     const { id: _id } = req.params;
     const category = new Category({ _id, name, description });

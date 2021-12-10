@@ -4,15 +4,27 @@ block content
   h1(class='mb-4')= title
 
   form(method='POST' action='')
-    div.form-group
+    div(class='form-group')
       label(for='name') #[strong Name:]
-      input#name.form-control(type='text', name='name' value=(undefined===product ? '' : product.name))
-    div.form-group
+      input(
+        id='name'
+        class='form-control'
+        type='text'
+        name='name'
+        value=(undefined===product ? '' : product.name)
+      )
+    div(class='form-group')
       label(for='description') #[strong Description:]
-      input#description.form-control(type='text', name='description' value=(undefined===product ? '' : product.description))    
-    div.form-group
+      input(
+        id='description'
+        class='form-control'
+        type='text'
+        name='description'
+        value=(undefined===product ? '' : product.description)
+      )
+    div(class='form-group')
       label(for='category') #[strong Category:]
-      select#category.custom-select(name='category')
+      select(id='category' class='custom-select' name='category')
         each category in categories
           option(
             value=category.name
@@ -20,15 +32,36 @@ block content
               product && category._id.toString() === product.category._id.toString()
             )
           ) #{category.name}
-    div.form-group
+    div(class='form-group')
       label(for='price') #[strong Price:]
-      input#price.form-control(type='text', name='price' value=(undefined===product ? '' : product.price))
-    div.form-group
-      label(for='number-in-stock') #[strong Number in stock:]
-      input#number-in-stock.form-control(type='text', name='number_in_stock' value=(undefined===product ? '' : product.number_in_stock))
+      input(
+        id='price'
+        class='form-control'
+        type='text'
+        name='price'
+        value=(undefined===product ? '' : product.price)
+      )
+    div(class='form-group')
+      label(for='number-in-stock') #[strong Stock:]
+      input(
+        id='number-in-stock'
+        class='form-control'
+        type='text'
+        name='number_in_stock'
+        value=(undefined===product ? '' : product.number_in_stock)
+      )
+    div(class='form-group')
+      label(for='secret') #[strong Secret Password:]
+      input(
+        id='secret'
+        type='password'
+        class='form-control col mr-2'
+        name='secret'
+        placeholder='Type the secret password to allow editing'
+      )
     button.btn.btn-primary(type='submit') Submit
 
   if errors
-   ul
+   ul(class='p-2')
     for error in errors
-     li!= error.msg
+     li(class='text-danger')!= error.msg
