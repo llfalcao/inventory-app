@@ -85,7 +85,10 @@ exports.productCreatePOST = [
       category,
       price: req.body.price,
       number_in_stock: req.body.number_in_stock,
-      image: await getProductImage(req.body.name),
+      image:
+        req.body.name === ''
+          ? '/images/product-image-default.jpg'
+          : await getProductImage(req.body.name),
     });
     // Render form again if there are errors
     if (!errors.isEmpty()) {
@@ -130,7 +133,7 @@ exports.productDeleteGET = (req, res, next) => {
 
 // Handle Product delete on POST
 exports.productDeletePOST = (req, res, next) => {
-  if (req.body.secret !== process.env.DB_DEL) {
+  if (req.body.secret !== process.env.DB_SECRET) {
     const error = 'Incorrect password';
     Product.findById(req.params.id, (err, product) => {
       if (err) return next(err);
