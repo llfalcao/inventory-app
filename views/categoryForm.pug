@@ -24,14 +24,15 @@ block content
         value=(undefined===category ? '' : category.description)
       )
     div(class='form-group')
+      label(for='secret') #[strong Secret Password:]
       input(
         id='secret'
         type='password'
         class='form-control col mr-2'
         name='secret'
-        placeholder='Type the secret password to allow editing'
+        placeholder='Enter the secret password'
       )
-    button.btn.btn-primary(type='submit') Submit
+    button.btn.btn-primary(type='submit') Save
 
   if errors
    ul(class='p-2')

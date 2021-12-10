@@ -6,15 +6,18 @@ block content
 
   p Do you really want to delete this category?
 
-  form(method='POST' action='' class='m-3 col-xs-2')
-    div(class='form-group row')
-      input(
-        id='secret'
-        type='password'
-        class='form-control col mr-2'
-        name='secret'
-        placeholder='Type the secret password here'
-      )
+  form(method='POST' action='' class='col-xs-2')
+    div(class='form-group')
+      label(for='secret') #[strong Secret Password:]
+      div(class='row mx-0')
+        input(
+          id='secret'
+          type='password'
+          class='form-control mr-2 mt-2'
+          name='secret'
+          placeholder='Enter the secret password'
+        ) 
+        button(class='btn btn-danger mt-2' type='submit') Delete
       input(
         id='categoryid'
         class='form-control'
@@ -23,14 +26,5 @@ block content
         required='true'
         value=category._id
       )
-      input(
-        id='categoryname'
-        class='form-control'
-        type='hidden'
-        name='categoryname'
-        required='true'
-        value=category.name
-      )
-      button(class='btn btn-danger' type='submit') Delete
   if error
     p(class='m-0 text-danger')= error
