@@ -48,7 +48,6 @@ async function getProductImage(name) {
   return await new Promise((resolve, reject) => {
     gis({ searchTerm: name, queryStringAddition: '&tbs=isz:m' }, (err, res) => {
       if (err) {
-        console.log(err);
         resolve('/images/product-image-default.jpg');
       } else {
         resolve(res[0].url);
@@ -168,6 +167,7 @@ exports.productUpdateGET = (req, res, next) => {
         title: 'Update product',
         product,
         categories,
+        requirePassword: true,
       }),
     )
     .catch((err) => next(err));
@@ -218,6 +218,7 @@ exports.productUpdatePOST = [
         title: 'Update product',
         product,
         categories,
+        requirePassword: true,
         errors: errors.array(),
       });
     } else {

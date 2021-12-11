@@ -50,15 +50,16 @@ block content
         name='number_in_stock'
         value=(undefined===product ? '' : product.number_in_stock)
       )
-    div(class='form-group')
-      label(for='secret') #[strong Secret Password:]
-      input(
-        id='secret'
-        type='password'
-        class='form-control col mr-2'
-        name='secret'
-        placeholder='Type the secret password to allow editing'
-      )
+    if requirePassword
+      div(class='form-group')
+        label(for='secret') #[strong Secret Password:]
+        input(
+          id='secret'
+          type='password'
+          class='form-control col mr-2'
+          name='secret'
+          placeholder='Enter the secret password to allow editing'
+        )
     button.btn.btn-primary(type='submit') Submit
 
   if errors

@@ -130,7 +130,12 @@ exports.categoryUpdateGET = (req, res, next) => {
   Category.findById(req.params.id, (err, category) => {
     if (err) return next(err);
     if (category === null) res.redirect('/inventory');
-    else res.render('categoryForm', { title: 'Update category', category });
+    else
+      res.render('categoryForm', {
+        title: 'Update category',
+        category,
+        requirePassword: true,
+      });
   });
 };
 
@@ -161,6 +166,7 @@ exports.categoryUpdatePOST = [
       res.render('categoryForm', {
         title: 'Update category',
         category,
+        requirePassword: true,
         errors: errors.array(),
       });
     } else {
