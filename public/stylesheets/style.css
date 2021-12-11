@@ -21,6 +21,7 @@ a {
 /* Sidebar */
 .sidebar-wrapper {
   background: #f6f6f6;
+  min-height: 100vh;
 }
 
 .nav-link {
