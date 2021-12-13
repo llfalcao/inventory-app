@@ -5,6 +5,6 @@ The app has two basic models, Product and Category, each with their CRUD operati
 
 Live: https://llfalcao-dsi.herokuapp.com
 
-![Product Detail Page](./docs/pdp.png)
-
 ![Product List](./docs/plist.png)
+
+![Product Detail Page](./docs/pdp.png)
